@@ -2,6 +2,21 @@
 <html>
 <head>
   <title>Datastore and Firebase Auth Example</title>
+  <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyALDmK9Yu9sFIUtPqyJAmjiChTTYCJtM2Y",
+      authDomain: "python3-tutorial.firebaseapp.com",
+      databaseURL: "https://python3-tutorial.firebaseio.com",
+      projectId: "python3-tutorial",
+      storageBucket: "python3-tutorial.appspot.com",
+      messagingSenderId: "890924062692"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script src="https://cdn.firebase.com/libs/firebaseui/2.6.2/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.6.2/firebaseui.css">
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -9,12 +24,25 @@
 
   <h1>Datastore and Firebase Auth Example</h1>
 
-  <!-- [START gae_python37_datastore_print_times] -->
-  <h2>Last 10 visits</h2>
-  {% for time in times %}
-    <p>{{ time['timestamp'] }}</p>
-  {% endfor %}
-  <!-- [END gae_python37_datastore_print_times] -->
+  <div id="firebaseui-auth-container"></div>
+
+  <button id="sign-out" hidden=true>Sign Out</button>
+
+  <div id="login-info" hidden=true>
+    <h2>Login info:</h2>
+    {% if user_data %}
+      <dl>
+        <dt>Name</dt><dd>{{ user_data['name'] }}</dd>
+        <dt>Email</dt><dd>{{ user_data['email'] }}</dd>
+        <dt>Last 10 visits</dt><dd>
+          {% for time in times %}
+            <p>{{ time['timestamp'] }}</p>
+          {% endfor %} </dd>
+      </dl>
+    {% elif error_message %}
+      <p>Error: {{ error_message }}</p>
+    {% endif %}
+  </div>
 
 </body>
 </html>
