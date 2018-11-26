@@ -1,0 +1,4 @@
+cron:
+- description: "first cron test"
+  url: /
+  schedule: every 5 minutes
